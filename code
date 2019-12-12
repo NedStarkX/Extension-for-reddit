@@ -1,0 +1,17 @@
+var connect = require('connect')
+  , stylus = require('stylus')
+  , nib = require('nib');
+
+var server = connect();
+
+function compile(str, path) {
+  return stylus(str)
+	.set('filename', path)
+	.set('compress', true)
+	.use(nib());
+}
+
+server.use(stylus.middleware({
+	src: __dirname
+  , compile: compile
+}));
